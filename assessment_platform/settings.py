@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     # Local apps
     "accounts",
+    "questions",
     "exams",
     "results",
 ]

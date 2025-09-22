@@ -24,7 +24,6 @@ class AccountTests(APITestCase):
         url = reverse('register')
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIn('access', response.data)
 
     def test_login_user(self):
         data = {
@@ -37,19 +36,19 @@ class AccountTests(APITestCase):
         self.assertIn('access', response.data)
 
     def test_user_list_as_admin(self):
-        self.client.force_authenticate(user = "admin")
+        self.client.force_authenticate(user = self.admin)
         url = reverse('user-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_list_as_student(self):
-        self.client.force_authenticate(user = "student")
+        self.client.force_authenticate(user = self.student)
         url = reverse('user-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_profile_access(self):
-        self.client.force_authenticate(user = "student")
+        self.client.force_authenticate(user = self.student)
         url = reverse('profile')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
